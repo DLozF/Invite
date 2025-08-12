@@ -94,7 +94,7 @@
     .heart:nth-child(3n) { color: #ffb6c1; font-size: 20px; }
     /* Pugs */
     .pug {
-      max-width: 150px; /* Adjust size as needed */
+      max-width: 150px;
       margin: 10px;
     }
     /* Animations */
@@ -111,7 +111,7 @@
     @media (max-width: 768px) {
       .main-title { font-size: 1.5rem; }
       .details { font-size: 0.9rem; max-width: 90%; }
-      .pug { max-width: 120px; /* Adjust size for mobile */ }
+      .pug { max-width: 120px; }
     }
   </style>
 </head>
@@ -144,6 +144,7 @@
       document.getElementById('envelope').style.display = 'none';
       document.getElementById('main-content').style.display = 'flex';
     });
+
     // Floating hearts
     function createHeart() {
       const heart = document.createElement('div');
@@ -154,16 +155,26 @@
       document.getElementById('hearts').appendChild(heart);
       setTimeout(() => heart.remove(), 5000);
     }
+
     setInterval(createHeart, 600);
     for (let i = 0; i < 15; i++) setTimeout(createHeart, i * 150);
+
     // NO button dodge effect
     const noBtn = document.getElementById('noBtn');
-    noBtn.addEventListener('mouseover', () => {
-      const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 20);
-      const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 20);
-      noBtn.style.left = `${x}px`;
-      noBtn.style.top = `${y}px`;
-    });
+
+    function moveNoButton() {
+      const maxX = window.innerWidth - noBtn.offsetWidth;
+      const maxY = window.innerHeight - noBtn.offsetHeight;
+
+      const randomX = Math.floor(Math.random() * maxX);
+      const randomY = Math.floor(Math.random() * maxY);
+
+      noBtn.style.left = randomX + 'px';
+      noBtn.style.top = randomY + 'px';
+    }
+
+    noBtn.addEventListener('mouseover', moveNoButton);
+    noBtn.addEventListener('touchstart', moveNoButton);
   </script>
 </body>
 </html>
