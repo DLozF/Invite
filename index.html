@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SIP Matcha Date 💌</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f1f8f4 0%, #fcecd8 100%);
+      font-family: 'Quicksand', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Envelope landing */
+    .envelope-container {
+      text-align: center;
+      animation: shake 1s infinite;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    .envelope-container img {
+      width: 160px;
+    }
+
+    @keyframes shake {
+      0% { transform: rotate(0); }
+      25% { transform: rotate(3deg); }
+      50% { transform: rotate(0deg); }
+      75% { transform: rotate(-3deg); }
+      100% { transform: rotate(0); }
+    }
+
+    /* Invitation content */
+    #main-content {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      padding: 20px;
+      text-align: center;
+      z-index: 2;
+    }
+
+    .main-title {
+      font-size: 2.5rem;
+      color: #2e7d32;
+      margin-bottom: 15px;
+      text-shadow: 3px 3px 6px rgba(0,0,0,0.15);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    .details {
+      background: #ffffffcc;
+      border: 2px solid #2e7d32;
+      border-radius: 15px;
+      padding: 20px;
+      font-size: 1.2rem;
+      color: #3e3e3e;
+      max-width: 300px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+
+    .details p {
+      margin: 8px 0;
+    }
+
+    /* Floating hearts */
+    .hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .heart {
+      position: absolute;
+      color: #d81b60;
+      font-size: 24px;
+      animation: float 4s ease-in-out infinite;
+      opacity: 0.8;
+    }
+
+    .heart:nth-child(odd) {
+      color: #2e7d32;
+    }
+
+    .heart:nth-child(3n) {
+      color: #ffb6c1;
+      font-size: 20px;
+    }
+
+    /* Pug images */
+    .pug {
+      max-width: 100px;
+      border-radius: 15px;
+      margin: 10px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+
+    /* Animations */
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.8; }
+      90% { opacity: 0.8; }
+      100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+    }
+
+    @media (max-width: 768px) {
+      .main-title { font-size: 2rem; }
+      .details { font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Envelope -->
+  <div class="envelope-container" id="envelope">
+    <img src="images/envelope.png" alt="Envelope">
+    <p style="color:#2e7d32; margin-top:10px;">Click me 💌</p>
+  </div>
+
+  <!-- Invitation -->
+  <div id="main-content">
+    <div class="hearts" id="hearts"></div>
+    <h1 class="main-title">You have received an Invitation to a Date 💖</h1>
+    <div class="details">
+      <p><strong>Place:</strong> SIP Matcha 🍵</p>
+      <p><strong>Time:</strong> Whenever you can 💚</p>
+      <p><strong>Dress Code:</strong> Bring your smile 😄</p>
+    </div>
+    <div>
+      <img src="images/pug1.png" alt="Pug 1" class="pug">
+      <img src="images/pug2.png" alt="Pug 2" class="pug">
+    </div>
+  </div>
+
+  <script>
+    // Click envelope -> show invite
+    document.getElementById('envelope').addEventListener('click', () => {
+      document.getElementById('envelope').style.display = 'none';
+      document.getElementById('main-content').style.display = 'flex';
+    });
+
+    // Floating hearts
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.innerHTML = '❤️';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+      document.getElementById('hearts').appendChild(heart);
+      setTimeout(() => heart.remove(), 5000);
+    }
+
+    setInterval(createHeart, 600);
+    for (let i = 0; i < 15; i++) {
+      setTimeout(createHeart, i * 150);
+    }
+  </script>
+</body>
+</html>
